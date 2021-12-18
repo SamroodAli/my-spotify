@@ -1,5 +1,6 @@
 import NextImage from "next/image";
 import NextLink from "next/link";
+
 import {
   Box,
   List,
@@ -8,6 +9,7 @@ import {
   LinkBox,
   LinkOverlay,
 } from "@chakra-ui/layout";
+
 import {
   MdHome,
   MdSearch,
@@ -15,6 +17,7 @@ import {
   MdPlaylistAdd,
   MdFavorite,
 } from "react-icons/md";
+
 import SideBarLinks from "./sideBarLinks";
 
 const navMenu = [
@@ -72,7 +75,12 @@ const Sidebar = () => {
           </Box>
         </Box>
         <Divider color="gray.800" />
-        <Box height="55%" overflowY="auto" paddingY="20px">
+        <Box
+          height="55%"
+          overflowY="hidden"
+          _hover={{ overflowY: "auto" }}
+          paddingY="20px"
+        >
           <List spaceing={2}>
             {playlists.map((playlist) => (
               <ListItem paddingX="20px" key={playlist}>
