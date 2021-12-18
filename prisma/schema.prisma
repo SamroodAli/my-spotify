@@ -12,9 +12,40 @@ datasource db {
 }
 
 model User {
+  id        Int        @id @default(autoincrement()) //@id is the id for the relation and by default, it will be autoincremented
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  email     String     @unique
+  password  String
+  playlists Playlist[]
+}
+
+model Song {
+  id        Int        @id @default(autoincrement()) //@id is the id for the relation and by default, it will be autoincremented
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  name      String
+  artist    Artist     @relation(fields: [artistId], references: [id])
+  artistId  Int
+  playlists Playlist[]
+  duration  Int
+}
+
+model Artist {
   id        Int      @id @default(autoincrement()) //@id is the id for the relation and by default, it will be autoincremented
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  email     String   @unique
-  password  String
+  songs     Song[]
+  name      String   @unique
+
+}
+
+model Playlist {
+  id        Int      @id @default(autoincrement()) //@id is the id for the relation and by default, it will be autoincremented
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
+  songs     Song[]
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
 }
