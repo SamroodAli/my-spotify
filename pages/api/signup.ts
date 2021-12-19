@@ -28,7 +28,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       id: user.id,
       time: Date.now(),
     },
-    "hello",
+    "jwtSecretKey",
     {
       expiresIn: "8h",
     }
