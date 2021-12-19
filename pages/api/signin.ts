@@ -21,7 +21,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       },
       "jwtSecretKey",
       {
-        expiresAt: "8h",
+        expiresIn: "8h",
       }
     );
     res.setHeader(
@@ -35,7 +35,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       })
     );
 
-    res.json(user);
+    res.status(200).json(user);
   } else {
     res.status(401).json({ error: "Invalid credentials" });
   }
