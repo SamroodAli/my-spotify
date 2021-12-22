@@ -11,12 +11,12 @@ export const validateRoute = (
     if (token) {
       let user: User | null;
       try {
-        const { id } = jwt.verify(token, "hello");
+        const { id } = jwt.verify(token, "jwtSecretKey");
         user = await prisma.user.findUnique({
           where: { id },
         });
       } catch (error) {
-        return res.status(401).json({ error: "Not Authorized" });
+        return res.status(401).json({ error: error.message });
       }
       return handler(req, res, user);
     }

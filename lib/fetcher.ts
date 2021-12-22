@@ -11,6 +11,10 @@ export default async function fetcher<Response>(
     },
     body: JSON.stringify(data),
   });
+
+  if (response.status > 399 && response.status < 200) {
+    throw new Error();
+  }
   const json = (await response.json()) as Response;
   return json;
 }

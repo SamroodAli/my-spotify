@@ -1,5 +1,5 @@
 import { NextResponse, NextMiddleware } from "next/server";
-const protectedPages = ["/", "/playlist", "/library"];
+const protectedPages = ["/", "/playlists", "/library"];
 
 const middleWare: NextMiddleware = (req) => {
   if (protectedPages.find((p) => p === req.nextUrl.pathname)) {
