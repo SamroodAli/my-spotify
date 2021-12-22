@@ -13,6 +13,8 @@ export enum Mode {
 
 const AuthForm: FC<{ mode: Mode }> = ({ mode }) => {
   const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
@@ -40,13 +42,32 @@ const AuthForm: FC<{ mode: Mode }> = ({ mode }) => {
       <Flex justify="center" align="center" height="calc(100% - 100px)">
         <Box padding="50px" bg="gray.900" borderRadius="6px">
           <form onSubmit={handleSubmit}>
+            {mode === Mode.signup && (
+              <>
+                <Input
+                  value={firstName}
+                  placeholder="firstName"
+                  type="text"
+                  onChange={(e) => setFirstName(e.target.value)}
+                  marginY="1rem"
+                />
+                <Input
+                  value={lastName}
+                  placeholder="setLastName"
+                  type="text"
+                  onChange={(e) => setLastName(e.target.value)}
+                />
+              </>
+            )}
             <Input
+              value={email}
               placeholder="email"
               type="email"
               onChange={(e) => setEmail(e.target.value)}
               marginY="1rem"
             />
             <Input
+              value={password}
               placeholder="password"
               type="password"
               onChange={(e) => setPassword(e.target.value)}

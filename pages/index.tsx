@@ -4,17 +4,23 @@ import prisma from "../lib/prisma";
 import { Box, Text, Flex } from "@chakra-ui/layout";
 import { Artist } from "@prisma/client";
 import { Image } from "@chakra-ui/react";
+import { useMe } from "../lib/hooks";
 
 const Home = ({ artists }: { artists: Artist[] }) => {
-  const { user } = useMe();
+  const { user, isLoading } = useMe();
+
+  if (isLoading) {
+    return null;
+    console.log(user);
+  }
 
   return (
     <GradientLayout
       color="gray"
       subtitle={"profile"}
-      title="Scott Moss"
+      title={`${user.firstName} ${user.lastName}`}
       roundImage
-      description={`15 Public playlists`}
+      description={"15 playlists"}
       image="https://dl.dropboxusercontent.com/s/8tyfzyb3b34ouxd/Openhttps://dl.dropboxusercontent.com/s/8tyfzyb3b34ouxd/Open"
     >
       <Box color="white" paddingX="40px">
@@ -24,7 +30,7 @@ const Home = ({ artists }: { artists: Artist[] }) => {
         </Box>
         <Flex>
           {artists.map((artist) => (
-            <Box paddingX="10px" width="20%">
+            <Box key={artist.id} paddingX="10px" width="20%">
               <Box bg="gray.900" borderRadius="4px" padding="15px">
                 <Image
                   src="http://placekitten.com/300/300"
