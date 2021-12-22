@@ -3,9 +3,15 @@ import { Box, Flex, Input, Button } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import {} from "swr";
 import NextImage from "next/image";
+import NextLink from "next/link";
 import { auth } from "../lib/mutations";
 
-const AuthForm: FC<{ mode: "signin" | "signup" }> = ({ mode }) => {
+export enum Mode {
+  signin = "signin",
+  signup = "signup",
+}
+
+const AuthForm: FC<{ mode: Mode }> = ({ mode }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -18,6 +24,8 @@ const AuthForm: FC<{ mode: "signin" | "signup" }> = ({ mode }) => {
     setIsLoading(false);
     router.push("/");
   };
+
+  const inverseMode = mode === Mode.signin ? Mode.signup : Mode.signin;
 
   return (
     <Box height="100vh" width="100vw" bg="black" color="white">
@@ -36,6 +44,7 @@ const AuthForm: FC<{ mode: "signin" | "signup" }> = ({ mode }) => {
               placeholder="email"
               type="email"
               onChange={(e) => setEmail(e.target.value)}
+              marginY="1rem"
             />
             <Input
               placeholder="password"
@@ -54,6 +63,20 @@ const AuthForm: FC<{ mode: "signin" | "signup" }> = ({ mode }) => {
             >
               {mode}
             </Button>
+            <NextLink href={`/${inverseMode}`} passHref>
+              <Button
+                type="submit"
+                bg="green.500"
+                margin="1rem"
+                sx={{
+                  "&:hover": {
+                    bg: "green.400",
+                  },
+                }}
+              >
+                {inverseMode}
+              </Button>
+            </NextLink>
           </form>
         </Box>
       </Flex>

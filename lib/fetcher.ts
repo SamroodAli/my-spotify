@@ -1,6 +1,9 @@
-export default function fetcher(url: string, data = undefined) {
+export default async function fetcher<Response>(
+  url: string,
+  data = undefined
+): Promise<Response> {
   // data is undefined by default becase JSON.stringify(undefined) is undefined whereas JSON.stringify(null) returns a string 'null'
-  return fetch(`${window.location.origin}/api${url}`, {
+  const response = await fetch(`${window.location.origin}/api${url}`, {
     method: data ? "POST" : "GET",
     credentials: "include", // for jwt cookies
     headers: {
@@ -8,4 +11,6 @@ export default function fetcher(url: string, data = undefined) {
     },
     body: JSON.stringify(data),
   });
+  const json = (await response.json()) as Response;
+  return json;
 }

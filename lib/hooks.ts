@@ -1,8 +1,9 @@
+import { Playlist, User } from "@prisma/client";
 import useSWR from "swr";
 import fetcher from "./fetcher";
 
 export const useMe = () => {
-  const { data, error } = useSWR("/me", fetcher);
+  const { data, error } = useSWR<User>("/me", fetcher);
 
   return {
     user: data,
@@ -12,7 +13,7 @@ export const useMe = () => {
 };
 
 export const usePlaylist = () => {
-  const { data, error } = useSWR("/plalist", fetcher);
+  const { data, error } = useSWR<Playlist[]>("/playlist", fetcher);
   return {
     playlists: data || [],
     isLoading: !data && !error,
