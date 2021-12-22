@@ -3,22 +3,18 @@ import { NextPageContext } from "next";
 import prisma from "../lib/prisma";
 import { Box, Text, Flex } from "@chakra-ui/layout";
 import { Artist } from "@prisma/client";
-import { Image } from "@chakra-ui/react";
+import { Image, Skeleton } from "@chakra-ui/react";
 import { useMe } from "../lib/hooks";
 
 const Home = ({ artists }: { artists: Artist[] }) => {
   const { user, isLoading } = useMe();
 
-  if (isLoading) {
-    return null;
-    console.log(user);
-  }
-
   return (
     <GradientLayout
       color="gray"
       subtitle={"profile"}
-      title={`${user.firstName} ${user.lastName}`}
+      isLoading={isLoading}
+      title={`${user?.firstName} ${user?.lastName}`}
       roundImage
       description={"15 playlists"}
       image="https://dl.dropboxusercontent.com/s/8tyfzyb3b34ouxd/Openhttps://dl.dropboxusercontent.com/s/8tyfzyb3b34ouxd/Open"
