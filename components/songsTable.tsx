@@ -2,8 +2,9 @@ import { Box } from "@chakra-ui/layout";
 import { Table, Thead, Td, Tr, Tbody, Th, IconButton } from "@chakra-ui/react";
 import { BsFillPlayFill } from "react-icons/bs";
 import { AiOutlineClockCircle } from "react-icons/ai";
+import { Song } from "@prisma/client";
 
-const SongsTable = () => {
+const SongsTable = ({ songs }: { songs: Song[] }) => {
   return (
     <Box bg="transparent" color="white">
       <Box padding="10px" marginBottom="20px">
@@ -27,6 +28,25 @@ const SongsTable = () => {
               </Th>
             </Tr>
           </Thead>
+          <Tbody>
+            {songs.map((song, i) => (
+              <Tr
+                key={song.id}
+                sx={{
+                  transition: "all .3s",
+                  "&:hover": {
+                    bg: "rgba(255,255,255,0.1)",
+                  },
+                }}
+                cursor="cursor"
+              >
+                <Td>{i + 1}</Td>
+                <Td>{song.name}</Td>
+                <Td>{song.createdAt.toString()}</Td>
+                <Td>{song.duration}</Td>
+              </Tr>
+            ))}
+          </Tbody>
         </Table>
       </Box>
     </Box>

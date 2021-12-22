@@ -2,6 +2,8 @@ import Gradientlayout from "../../components/gradientLayout";
 import SongsTable from "../../components/songsTable";
 import { validateToken } from "../../lib/auth";
 import prisma from "../../lib/prisma";
+import { Playlist, Song } from "@prisma/client";
+import { NextPageContext } from "next";
 
 const getBgColor = (id: number) => {
   const colors = [
@@ -20,7 +22,11 @@ const getBgColor = (id: number) => {
   return colors[id - 1] || colors[Math.floor(Math.random() * colors.length)];
 };
 
-const PlaylistShow = ({ playlist }) => {
+interface PlaylistWithSongs extends Playlist {
+  songs: Song[];
+}
+
+const PlaylistShow = ({ playlist }: { playlist: PlaylistWithSongs }) => {
   const color = getBgColor(playlist.id);
   return (
     <Gradientlayout
@@ -30,7 +36,7 @@ const PlaylistShow = ({ playlist }) => {
       description={`${playlist.songs.length} songs`}
       image={`https://picsum.photos/400?random=${playlist.id}`}
     >
-      <SongsTable />
+      <SongsTable songs={playlist.songs} />
     </Gradientlayout>
   );
 };
