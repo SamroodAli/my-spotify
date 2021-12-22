@@ -3,7 +3,7 @@ import useSWR from "swr";
 import fetcher from "./fetcher";
 
 interface UserMe extends User {
-  playlistCount: number;
+  playlistsCount: number;
 }
 
 export const useMe = () => {

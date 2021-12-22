@@ -16,7 +16,7 @@ const Home = ({ artists }: { artists: Artist[] }) => {
       isLoading={isLoading}
       title={`${user?.firstName} ${user?.lastName}`}
       roundImage
-      description={`${user.playlistCount} playlists`}
+      description={`${user?.playlistsCount} playlists`}
       image="https://dl.dropboxusercontent.com/s/8tyfzyb3b34ouxd/Openhttps://dl.dropboxusercontent.com/s/8tyfzyb3b34ouxd/Open"
     >
       <Box color="white" paddingX="40px">
