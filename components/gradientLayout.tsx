@@ -6,7 +6,7 @@ const Gradientlayout = ({
   children,
   image,
   subtitle,
-  isLoading,
+  isLoading = false,
   title,
   description,
   roundImage = false,
