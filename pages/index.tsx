@@ -6,11 +6,14 @@ import { Artist } from "@prisma/client";
 import { Image } from "@chakra-ui/react";
 
 const Home = ({ artists }: { artists: Artist[] }) => {
+  const { user } = useMe();
+
   return (
     <GradientLayout
       color="gray"
       subtitle={"profile"}
       title="Scott Moss"
+      roundImage
       description={`15 Public playlists`}
       image="https://dl.dropboxusercontent.com/s/8tyfzyb3b34ouxd/Openhttps://dl.dropboxusercontent.com/s/8tyfzyb3b34ouxd/Open"
     >

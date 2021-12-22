@@ -6,13 +6,15 @@ generator client {
 }
 
 datasource db {
-  provider          = "postgresql"
-  url               = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
   // shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 model User {
   id        Int        @id @default(autoincrement()) //@id is the id for the relation and by default, it will be autoincremented
+  firstName String
+  lastName  String
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   email     String     @unique
