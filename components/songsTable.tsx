@@ -3,6 +3,7 @@ import { Table, Thead, Td, Tr, Tbody, Th, IconButton } from "@chakra-ui/react";
 import { BsFillPlayFill } from "react-icons/bs";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { Song } from "@prisma/client";
+import { formatDate, formatTime } from "../lib/formatters";
 
 const SongsTable = ({ songs }: { songs: Song[] }) => {
   return (
@@ -42,8 +43,8 @@ const SongsTable = ({ songs }: { songs: Song[] }) => {
               >
                 <Td>{i + 1}</Td>
                 <Td>{song.name}</Td>
-                <Td>{song.createdAt.toString()}</Td>
-                <Td>{song.duration}</Td>
+                <Td>{formatDate(song.createdAt)}</Td>
+                <Td>{formatTime(song.duration)}</Td>
               </Tr>
             ))}
           </Tbody>
