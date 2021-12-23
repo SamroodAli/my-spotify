@@ -5,5 +5,6 @@ interface credentials {
   password: string;
 }
 
-export const auth = (mode: "signin" | "signup", body: credentials) =>
-  fetcher(`/${mode}`, body);
+export function auth<Response>(mode: "signin" | "signup", body: credentials) {
+  return fetcher<Response>(`/${mode}`, body);
+}
