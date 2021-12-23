@@ -36,7 +36,9 @@ const Gradientlayout = ({
               startColor={`${color}.500`}
               endColor={`${color}.600`}
             >
-              <Text fontSize="6xl">{title}</Text>
+              <Text fontSize="6xl" lineHeight="60px">
+                {title}
+              </Text>
             </Skeleton>
             <Skeleton
               isLoaded={!isLoading}

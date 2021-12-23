@@ -2,7 +2,7 @@ import Gradientlayout from "../../components/gradientLayout";
 import SongsTable from "../../components/songsTable";
 import { validateToken } from "../../lib/auth";
 import prisma from "../../lib/prisma";
-import { Playlist, Song } from "@prisma/client";
+import { Playlist, Song, User } from "@prisma/client";
 import { NextPageContext } from "next";
 
 const getBgColor = (id: number) => {
@@ -42,10 +42,10 @@ const PlaylistShow = ({ playlist }: { playlist: PlaylistWithSongs }) => {
 };
 
 export const getServerSideProps = async ({ query, req }) => {
-  let user;
+  let user: User;
 
   try {
-    const user = validateToken(req.cookies.TRAX_ACCESS_TOKEN!);
+    user = validateToken(req.cookies.TRAX_ACCESS_TOKEN!);
   } catch (error) {
     return {
       redirect: {
