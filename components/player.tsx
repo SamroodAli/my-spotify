@@ -25,7 +25,7 @@ import { formatTime } from "../lib/formatters";
 
 const Player = ({ songs, activeSong }) => {
   const [playing, setPlaying] = useState(false);
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(songs.findIndex(s=>s.id===activeSong.id));
   const [seek, setSeek] = useState(0.0);
   const [isSeeking, setIsSeeking] = useState(false);
   const [repeat, setRepeat] = useState(false);
@@ -102,6 +102,10 @@ const Player = ({ songs, activeSong }) => {
   const onSeek = (e) => {
     setSeek(parseFloat(e[0])); // update ui //rangeSlider gives u an array with min,max, the min is where the user dragged the seek bar to
     soundRef.current.seek(e[0]); // update playing song using react howler ref
+  };
+
+  const onSeekHover = (state) => {
+    setShowThumb(state);
   };
 
   return (
@@ -189,13 +193,13 @@ const Player = ({ songs, activeSong }) => {
               max={duration || 0}
               value={[seek]} // pass as min the current seek value to move the seek bar
               onChange={onSeek}
-              onChangeStart={() => setIsSeeking(true)}
-              onChangeEnd={() => setIsSeeking(false)}
+              onChangeStart={() => onSeekHover(true)}
+              onChangeEnd={() => onSeekHover(false)}
             >
               <RangeSliderTrack
                 bg="gray.800"
-                onMouseOver={() => setShowThumb(true)}
-                onMouseLeave={() => setShowThumb(false)}
+                onMouseOver={() => onSeekHover(true)}
+                onMouseOut={() => onSeekHover(false)}
               >
                 <RangeSliderFilledTrack
                   bg={showThumb || isSeeking ? "green.500" : "gray.500"}
@@ -203,7 +207,7 @@ const Player = ({ songs, activeSong }) => {
               </RangeSliderTrack>
               <RangeSliderThumb
                 onMouseOver={() => setShowThumb(true)}
-                onMouseLeave={() => setShowThumb(false)}
+                onMouseOut={() => setShowThumb(false)}
                 index={0}
                 height={3}
                 width={3}
