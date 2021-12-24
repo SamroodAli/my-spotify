@@ -10,8 +10,8 @@ import {
 import { useRouter } from "next/router";
 import NextImage from "next/image";
 import NextLink from "next/link";
-import { auth } from "../lib/mutations";
 import { User } from "@prisma/client";
+import { auth } from "../lib/mutations";
 
 export enum Mode {
   signin = "signin",
@@ -39,7 +39,6 @@ const AuthForm: FC<{ mode: Mode }> = ({ mode }) => {
   };
 
   const inverseMode = mode === Mode.signin ? Mode.signup : Mode.signin;
-  console.log(error);
 
   return (
     <Box height="100vh" width="100vw" bg="black" color="white">
