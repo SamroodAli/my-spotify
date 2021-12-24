@@ -21,16 +21,35 @@ import {
   MdOutlineRepeat,
 } from "react-icons/md";
 import { useStoreActions } from "easy-peasy";
+import { formatTime } from "../lib/formatters";
 
 const Player = ({ songs, activeSong }) => {
-  const [playing, setPlaying] = useState(true);
+  const [playing, setPlaying] = useState(false);
   const [index, setIndex] = useState(0);
   const [seek, setSeek] = useState(0.0);
   const [isSeeking, setIsSeeking] = useState(false);
   const [repeat, setRepeat] = useState(false);
   const [shuffle, setShuffle] = useState(false);
   const [duration, setDuration] = useState(0.0);
+  const [showThumb, setShowThumb] = useState(false);
   const soundRef = useRef(null);
+
+  useEffect(() => {
+    let timerId;
+    if (playing && !isSeeking) {
+      const updateSeek = () => {
+        setSeek(soundRef.current.seek());
+        timerId = requestAnimationFrame(updateSeek);
+      };
+
+      timerId = requestAnimationFrame(updateSeek);
+      return () => {
+        cancelAnimationFrame(timerId);
+      };
+    }
+
+    return cancelAnimationFrame(timerId);
+  }, [playing, isSeeking]);
 
   const setPlayState = (value) => {
     setPlaying(value);
@@ -173,14 +192,30 @@ const Player = ({ songs, activeSong }) => {
               onChangeStart={() => setIsSeeking(true)}
               onChangeEnd={() => setIsSeeking(false)}
             >
-              <RangeSliderTrack bg="gray.800">
-                <RangeSliderFilledTrack bg="gray.600" />
+              <RangeSliderTrack
+                bg="gray.800"
+                onMouseOver={() => setShowThumb(true)}
+                onMouseLeave={() => setShowThumb(false)}
+              >
+                <RangeSliderFilledTrack
+                  bg={showThumb || isSeeking ? "green.500" : "gray.500"}
+                />
               </RangeSliderTrack>
-              <RangeSliderThumb index={0} />
+              <RangeSliderThumb
+                onMouseOver={() => setShowThumb(true)}
+                onMouseLeave={() => setShowThumb(false)}
+                index={0}
+                height={3}
+                width={3}
+                borderRadius="100%"
+                sx={{
+                  visibility: isSeeking || showThumb ? "visible" : "hidden",
+                }}
+              />
             </RangeSlider>
           </Box>
           <Box width="10%" textAlign="right">
-            <Text fontSize="xs">3 :21</Text>
+            <Text fontSize="xs">{formatTime(duration)}</Text>
           </Box>
         </Flex>
       </Box>
