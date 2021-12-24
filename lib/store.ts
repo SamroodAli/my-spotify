@@ -1,11 +1,15 @@
 import { createStore, action, Action, createTypedHooks } from "easy-peasy";
-import { Song } from "@prisma/client";
+import { Song, Artist } from "@prisma/client";
+
+export interface SongWithArtist extends Song {
+  artist: Artist;
+}
 
 interface StoreModel {
   activeSongs: Song[];
-  activeSong: Song;
+  activeSong: SongWithArtist;
   changeActiveSongs: Action<StoreModel, Song[]>;
-  changeActiveSong: Action<StoreModel, Song>;
+  changeActiveSong: Action<StoreModel, SongWithArtist>;
 }
 
 export const store = createStore<StoreModel>({

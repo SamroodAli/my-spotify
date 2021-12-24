@@ -2,16 +2,15 @@ import { Box } from "@chakra-ui/layout";
 import { Table, Thead, Td, Tr, Tbody, Th, IconButton } from "@chakra-ui/react";
 import { BsFillPlayFill } from "react-icons/bs";
 import { AiOutlineClockCircle } from "react-icons/ai";
-import { Song } from "@prisma/client";
 import { formatDate, formatTime } from "../lib/formatters";
-import { useActions } from "../lib/store";
+import { SongWithArtist, useActions } from "../lib/store";
 
-const SongsTable = ({ songs }: { songs: Song[] }) => {
+const SongsTable = ({ songs }: { songs: SongWithArtist[] }) => {
   const { changeActiveSong, changeActiveSongs } = useActions(
     (actions) => actions
   );
 
-  const handlePlay = (activeSong?: Song) => {
+  const handlePlay = (activeSong?: SongWithArtist) => {
     changeActiveSong(activeSong || songs[0]);
     changeActiveSongs(songs);
   };
