@@ -1,9 +1,8 @@
+import { Playlist, Song, User } from "@prisma/client";
 import Gradientlayout from "../../components/gradientLayout";
 import SongsTable from "../../components/songsTable";
 import { validateToken } from "../../lib/auth";
 import prisma from "../../lib/prisma";
-import { Playlist, Song, User } from "@prisma/client";
-import { NextPageContext } from "next";
 
 const getBgColor = (id: number) => {
   const colors = [
