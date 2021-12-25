@@ -1,7 +1,7 @@
 export default async function fetcher<Response>(
   url: string,
   data = undefined
-): Promise<(Response & { error: undefined }) | { error: string }> {
+): Promise<Response> {
   // data is undefined by default becase JSON.stringify(undefined) is undefined whereas JSON.stringify(null) returns a string 'null'
   const response = await fetch(`${window.location.origin}/api${url}`, {
     method: data ? "POST" : "GET",
@@ -12,8 +12,6 @@ export default async function fetcher<Response>(
     body: JSON.stringify(data),
   });
 
-  const json = (await response.json()) as
-    | (Response & { error: undefined })
-    | { error: string };
+  const json = (await response.json()) as Response;
   return json;
 }

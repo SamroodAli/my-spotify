@@ -1,4 +1,5 @@
 import { NextResponse, NextMiddleware } from "next/server";
+
 const protectedPages = ["/", "/playlists", "/library"];
 
 const middleWare: NextMiddleware = (req) => {

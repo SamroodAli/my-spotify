@@ -1,8 +1,9 @@
-import { Playlist, Song, User } from "@prisma/client";
+import { Playlist, User } from "@prisma/client";
 import Gradientlayout from "../../components/gradientLayout";
 import SongsTable from "../../components/songsTable";
 import { validateToken } from "../../lib/auth";
 import prisma from "../../lib/prisma";
+import { SongWithArtist } from "../../lib/store";
 
 const getBgColor = (id: number) => {
   const colors = [
@@ -22,7 +23,7 @@ const getBgColor = (id: number) => {
 };
 
 interface PlaylistWithSongs extends Playlist {
-  songs: Song[];
+  songs: SongWithArtist[];
 }
 
 const PlaylistShow = ({ playlist }: { playlist: PlaylistWithSongs }) => {

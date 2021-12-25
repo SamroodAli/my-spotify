@@ -1,9 +1,8 @@
-import GradientLayout from "../components/gradientLayout";
-import { NextPageContext } from "next";
-import prisma from "../lib/prisma";
 import { Box, Text, Flex } from "@chakra-ui/layout";
 import { Artist } from "@prisma/client";
-import { Image, Skeleton } from "@chakra-ui/react";
+import { Image } from "@chakra-ui/react";
+import prisma from "../lib/prisma";
+import GradientLayout from "../components/gradientLayout";
 import { useMe } from "../lib/hooks";
 
 const Home = ({ artists }: { artists: Artist[] }) => {
@@ -12,7 +11,7 @@ const Home = ({ artists }: { artists: Artist[] }) => {
   return (
     <GradientLayout
       color="gray"
-      subtitle={"profile"}
+      subtitle="profile"
       isLoading={isLoading}
       title={`${user?.firstName} ${user?.lastName}`}
       roundImage
@@ -45,7 +44,7 @@ const Home = ({ artists }: { artists: Artist[] }) => {
   );
 };
 
-export const getServerSideProps = async ({ req }: NextPageContext) => {
+export const getServerSideProps = async () => {
   const artists = await prisma.artist.findMany({});
 
   return {

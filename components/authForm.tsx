@@ -13,12 +13,7 @@ import NextLink from "next/link";
 import { User } from "@prisma/client";
 import { auth } from "../lib/mutations";
 
-export enum Mode {
-  signin = "signin",
-  signup = "signup",
-}
-
-const AuthForm: FC<{ mode: Mode }> = ({ mode }) => {
+const AuthForm: FC<{ mode: "signin" | "signup" }> = ({ mode }) => {
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -30,7 +25,13 @@ const AuthForm: FC<{ mode: Mode }> = ({ mode }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    const response = await auth<User>(mode, { email, password });
+    const response = await auth<(User & { error: string }) | { error: string }>(
+      mode,
+      {
+        email,
+        password,
+      }
+    );
     if (!response.error) {
       return router.push("/");
     }
@@ -38,7 +39,7 @@ const AuthForm: FC<{ mode: Mode }> = ({ mode }) => {
     setIsLoading(false);
   };
 
-  const inverseMode = mode === Mode.signin ? Mode.signup : Mode.signin;
+  const inverseMode = mode === "signin" ? "signup" : "signin";
 
   return (
     <Box height="100vh" width="100vw" bg="black" color="white">
@@ -54,7 +55,7 @@ const AuthForm: FC<{ mode: Mode }> = ({ mode }) => {
         <Box padding="50px" bg="gray.900" borderRadius="6px">
           <form onSubmit={handleSubmit}>
             <FormControl isInvalid={!!error}>
-              {mode === Mode.signup && (
+              {mode === "signup" && (
                 <>
                   <Input
                     value={firstName}

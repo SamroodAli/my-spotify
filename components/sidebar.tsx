@@ -83,21 +83,22 @@ const Sidebar = () => {
           paddingY="20px"
         >
           <List spaceing={2}>
-            {playlists.map((playlist) => (
-              <ListItem paddingX="20px" key={playlist.id}>
-                <LinkBox>
-                  <NextLink
-                    href={{
-                      pathname: "/playlists/[id]",
-                      query: { id: playlist.id },
-                    }}
-                    passHref
-                  >
-                    <LinkOverlay>{playlist.name}</LinkOverlay>
-                  </NextLink>
-                </LinkBox>
-              </ListItem>
-            ))}
+            {Array.isArray(playlists) &&
+              playlists.map((playlist) => (
+                <ListItem paddingX="20px" key={playlist.id}>
+                  <LinkBox>
+                    <NextLink
+                      href={{
+                        pathname: "/playlists/[id]",
+                        query: { id: playlist.id },
+                      }}
+                      passHref
+                    >
+                      <LinkOverlay>{playlist.name}</LinkOverlay>
+                    </NextLink>
+                  </LinkBox>
+                </ListItem>
+              ))}
           </List>
         </Box>
       </Box>
