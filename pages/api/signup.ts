@@ -30,7 +30,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       id: user.id,
       time: Date.now(),
     },
-    "jwtSecretKey",
+    process.env.JWT_SECRET,
     {
       expiresIn: "8h",
     }

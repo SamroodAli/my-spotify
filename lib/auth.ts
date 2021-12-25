@@ -1,17 +1,15 @@
 import { NextApiResponse, NextApiRequest } from "next";
 import jwt from "jsonwebtoken";
-import prisma from "./prisma";
 import { User } from "@prisma/client";
+import prisma from "./prisma";
 
-export const validateRoute = (
-  handler: (req: NextApiRequest, res: NextApiResponse, user?: User) => void
-) => {
+export const validateRoute = (handler) => {
   return async (req: NextApiRequest, res: NextApiResponse) => {
     const token = req.cookies.TRAX_ACCESS_TOKEN;
     if (token) {
       let user: User | null;
       try {
-        const { id } = jwt.verify(token, "jwtSecretKey");
+        const { id } = jwt.verify(token, process.env.JWT_SECRET);
         user = await prisma.user.findUnique({
           where: { id },
         });
@@ -25,6 +23,6 @@ export const validateRoute = (
 };
 
 export const validateToken = (token) => {
-  const user = jwt.verify(token, "jwtSecretKey");
+  const user = jwt.verify(token, process.env.JWT_SECRET);
   return user;
 };
