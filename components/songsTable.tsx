@@ -6,13 +6,14 @@ import { formatDate, formatTime } from "../lib/formatters";
 import { SongWithArtist, useActions } from "../lib/store";
 
 const SongsTable = ({ songs }: { songs: SongWithArtist[] }) => {
-  const { changeActiveSong, changeActiveSongs } = useActions(
+  const { changeActiveSong, changeActiveSongs, playSong } = useActions(
     (actions) => actions
   );
 
   const handlePlay = (activeSong?: SongWithArtist) => {
     changeActiveSong(activeSong || songs[0]);
     changeActiveSongs(songs);
+    playSong(true);
   };
 
   return (

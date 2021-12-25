@@ -20,19 +20,27 @@ import {
   MdOutlinePauseCircleFilled,
   MdOutlineRepeat,
 } from "react-icons/md";
-import { useStoreActions } from "easy-peasy";
+import { Song } from "@prisma/client";
 import { formatTime } from "../lib/formatters";
+import { useActions, useSelector } from "../lib/store";
 
 const Player = ({ songs, activeSong }) => {
-  const [playing, setPlaying] = useState(false);
-  const [index, setIndex] = useState(songs.findIndex(s=>s.id===activeSong.id));
+  const [index, setIndex] = useState<number>(
+    songs.findIndex((s: Song) => s.id === activeSong.id)
+  );
+
   const [seek, setSeek] = useState(0.0);
-  const [isSeeking, setIsSeeking] = useState(false);
-  const [repeat, setRepeat] = useState(false);
-  const [shuffle, setShuffle] = useState(false);
-  const [duration, setDuration] = useState(0.0);
-  const [showThumb, setShowThumb] = useState(false);
+  const [isSeeking, setIsSeeking] = useState<boolean>(false);
+  const [repeat, setRepeat] = useState<boolean>(false);
+  const repeatRef = useRef(repeat);
+  const [shuffle, setShuffle] = useState<boolean>(false);
+  const shuffleRef = useRef(shuffle);
+  const [duration, setDuration] = useState<number>(0.0);
+  const [showThumb, setShowThumb] = useState<boolean>(false);
   const soundRef = useRef(null);
+
+  const { playing } = useSelector((state) => state);
+  const { changeActiveSong, playSong } = useActions((actions) => actions);
 
   useEffect(() => {
     let timerId;
@@ -51,8 +59,21 @@ const Player = ({ songs, activeSong }) => {
     return cancelAnimationFrame(timerId);
   }, [playing, isSeeking]);
 
-  const setPlayState = (value) => {
-    setPlaying(value);
+  useEffect(() => {
+    changeActiveSong(songs[index]);
+  }, [index, changeActiveSong, songs]);
+
+  // use the latest value of repeat using ref
+  useEffect(() => {
+    repeatRef.current = repeat;
+  }, [repeat]);
+
+  useEffect(() => {
+    shuffleRef.current = shuffle;
+  }, [shuffle]);
+
+  const setPlayState = (value: boolean) => {
+    playSong(value);
   };
 
   const onShuffle = () => {
@@ -73,7 +94,7 @@ const Player = ({ songs, activeSong }) => {
 
   const nextSong = () => {
     const nextSongIndex = (prevSongIndex: number) => {
-      if (shuffle) {
+      if (shuffleRef.current) {
         const next = Math.floor(Math.random() * songs.length);
         if (next === prevSongIndex) {
           return nextSongIndex(prevSongIndex);
@@ -87,7 +108,7 @@ const Player = ({ songs, activeSong }) => {
   };
 
   const onEnd = () => {
-    if (repeat) {
+    if (repeatRef.current) {
       soundRef.current.seek(0); // repeat song by starting again from the beginning if repeat is on
     } else {
       nextSong();
@@ -99,8 +120,8 @@ const Player = ({ songs, activeSong }) => {
     setDuration(songDuration); // update ui with song duration
   };
 
-  const onSeek = (e) => {
-    setSeek(parseFloat(e[0])); // update ui //rangeSlider gives u an array with min,max, the min is where the user dragged the seek bar to
+  const onSeek = (e: number[]) => {
+    setSeek(e[0]); // update ui //rangeSlider gives u an array with min,max, the min is where the user dragged the seek bar to
     soundRef.current.seek(e[0]); // update playing song using react howler ref
   };
 
@@ -193,8 +214,8 @@ const Player = ({ songs, activeSong }) => {
               max={duration || 0}
               value={[seek]} // pass as min the current seek value to move the seek bar
               onChange={onSeek}
-              onChangeStart={() => onSeekHover(true)}
-              onChangeEnd={() => onSeekHover(false)}
+              onChangeStart={() => setIsSeeking(true)}
+              onChangeEnd={() => setIsSeeking(false)}
             >
               <RangeSliderTrack
                 bg="gray.800"
@@ -206,8 +227,8 @@ const Player = ({ songs, activeSong }) => {
                 />
               </RangeSliderTrack>
               <RangeSliderThumb
-                onMouseOver={() => setShowThumb(true)}
-                onMouseOut={() => setShowThumb(false)}
+                onMouseOver={() => onSeekHover(true)}
+                onMouseOut={() => onSeekHover(false)}
                 index={0}
                 height={3}
                 width={3}
