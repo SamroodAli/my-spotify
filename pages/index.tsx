@@ -1,6 +1,7 @@
 import { Box, Text, Flex } from "@chakra-ui/layout";
 import { Artist } from "@prisma/client";
 import { Image } from "@chakra-ui/react";
+import NextLink from "next/link";
 import prisma from "../lib/prisma";
 import GradientLayout from "../components/gradientLayout";
 import { useMe } from "../lib/hooks";
@@ -25,18 +26,25 @@ const Home = ({ artists }: { artists: Artist[] }) => {
         </Box>
         <Flex>
           {artists.map((artist) => (
-            <Box key={artist.id} paddingX="10px" width="20%">
-              <Box bg="gray.900" borderRadius="4px" padding="15px">
-                <Image
-                  src="http://placekitten.com/300/300"
-                  borderRadius="100%"
-                />
-                <Box marginTop="20px">
-                  <Text fontSize="large">{artist.name}</Text>
-                  <Text fontSize="x-small">Artist</Text>
+            <NextLink
+              href={{
+                pathname: "/artists/[id]",
+                query: { id: artist.id },
+              }}
+            >
+              <Box key={artist.id} paddingX="10px" width="20%">
+                <Box bg="gray.900" borderRadius="4px" padding="15px">
+                  <Image
+                    src="http://placekitten.com/300/300"
+                    borderRadius="100%"
+                  />
+                  <Box marginTop="20px">
+                    <Text fontSize="large">{artist.name}</Text>
+                    <Text fontSize="x-small">Artist</Text>
+                  </Box>
                 </Box>
               </Box>
-            </Box>
+            </NextLink>
           ))}
         </Flex>
       </Box>

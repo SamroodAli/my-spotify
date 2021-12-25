@@ -41,7 +41,7 @@ const ArtistShow = ({ artist }: { artist: ArtistWithSongs }) => {
 };
 
 export const getServerSideProps = async ({ query }) => {
-  const artists = await prisma.artist.findUnique({
+  const artist = await prisma.artist.findUnique({
     where: {
       id: Number(query.id),
     },
@@ -60,7 +60,7 @@ export const getServerSideProps = async ({ query }) => {
   });
 
   return {
-    props: { artists },
+    props: { artist },
   };
 };
 export default ArtistShow;
