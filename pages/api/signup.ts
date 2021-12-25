@@ -8,6 +8,7 @@ import prisma from "../../lib/prisma";
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const salt = bcrypt.genSaltSync();
   const { firstName, lastName, email, password } = req.body;
+  console.log(req.body);
 
   let user: User;
   try {
@@ -24,6 +25,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     res.json({ error: "User already exists" });
   }
 
+  console.log(user);
   const token = jwt.sign(
     {
       email: user.email,

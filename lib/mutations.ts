@@ -1,6 +1,8 @@
 import fetcher from "./fetcher";
 
 interface credentials {
+  firstName?: string;
+  lastName?: string;
   email: string;
   password: string;
 }

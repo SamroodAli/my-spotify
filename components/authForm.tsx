@@ -28,6 +28,8 @@ const AuthForm: FC<{ mode: "signin" | "signup" }> = ({ mode }) => {
     const response = await auth<(User & { error: string }) | { error: string }>(
       mode,
       {
+        firstName,
+        lastName,
         email,
         password,
       }
