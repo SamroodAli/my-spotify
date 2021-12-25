@@ -7,14 +7,18 @@ const PlayerBar = () => {
 
   return (
     <Box height="100px" width="100vw" bg="gray.900" padding="10px">
-      <Flex align="center" justify="center">
+      <Flex align="center" justify="center" height="100%">
         {activeSong && (
           <Box padding="20px" color="white" width="30%">
             <Text fontSize="large">{activeSong.name}</Text>
             <Text fontSize="small">{activeSong.artist.name}</Text>
           </Box>
         )}
-        {!activeSong && <Text color="white">Select a song to play</Text>}
+        {!activeSong && (
+          <Text color="white" fontSize="large">
+            Select a song to play
+          </Text>
+        )}
         {activeSong && (
           <Box width="40%">
             <Player songs={activeSongs} activeSong={activeSong} />
