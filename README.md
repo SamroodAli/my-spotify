@@ -1,34 +1,89 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Trax Spotify Clone
+Trax is a Full Stack Spotify Clone code-along project from frontendmasters.
+
+## Technologies technologies
+
+- React with javascript.
+- Nextjs
+- Server Side rendering
+- JWT
+- Easy peasy state management
+- Prisma ORM
+- Postgres Database
+
+## Live Demo
+
+[Vercel](https://samrood-spotify.vercel.app/)
 
 ## Getting Started
 
-First, run the development server:
+To get a local copy up and running follow these simple example steps.
 
-```bash
-npm run dev
-# or
-yarn dev
+- A browser
+- Node js ([install node](https://nodejs.org/en/download/))
+
+### Setup
+
+1. Clone repository:
+
+```sh
+  $ git clone https://github.com/SamroodAli/my-spotify.git
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Change directory inside project
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+```sh
+cd my-spotify
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+3. In your terminal, run
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+```sh
+npm i
+```
 
-## Learn More
+4. Deploy app to localhost
 
-To learn more about Next.js, take a look at the following resources:
+```
+npm start
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Available Scripts
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+In the project directory, you can run:
 
-## Deploy on Vercel
+### `npm run dev`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Runs the app in the development mode.\
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### `npm run build`
+
+Builds the app for production
+
+### `npm start`
+
+Runs the app on production mode.
+
+## Author
+
+![Samrood Ali's GitHub stats](https://github-readme-stats.vercel.app/api?username=SamroodAli&count_private=true&theme=dark&show_icons=true)
+
+👤 **Samrood Ali**
+
+- GitHub: [@githubhandle](https://github.com/SamroodAli)
+- LinkedIn: [LinkedIn](https://www.linkedin.com/in/samrood-ali/)
+
+# Attributions
+- Scott Moss, Instructor
+- Frontendmasters
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome!
+
+Feel free to check the [issues page](https://github.com/SamroodAli/codezilla/issues).
+
+## Show your support
+
+Give a ⭐️ if you like this project!
